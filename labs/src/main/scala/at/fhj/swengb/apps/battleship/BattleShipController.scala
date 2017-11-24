@@ -46,6 +46,17 @@ object BattleShip {
 
 }
 
+case class BattleShip(name: String, positions: Set[BattlePos]) extends Vessel {
+
+  // every battleship has to have a name
+  require(name.nonEmpty, "Name has to be set.")
+
+  // require proofs that positions is of size 5
+  require(positions.size == 5, s"For mighty battleship '$name' required 5 positions, but got ${positions.size}.")
+}
+
+
+
 // TODO add additional vessels, along with specs for each vessel. start with Cruiser
 // TODO add Cruiser class + object (4 cells)
 // TODO add Destroyer class + object (3 cells)
@@ -71,9 +82,6 @@ case class Fleet(vessels: Set[Vessel]) {
   def findByName(name: String): Option[Vessel] = vessels.find(v => v.name == name)
 }
 
-case class BattleShip(name: String, positions: Set[BattlePos]) extends Vessel {
-  require(positions.size == 5, s"For mighty battleship '$name' required 5 positions, but got ${positions.size}.")
-}
 
 
 case class BattleCell(pos: BattlePos

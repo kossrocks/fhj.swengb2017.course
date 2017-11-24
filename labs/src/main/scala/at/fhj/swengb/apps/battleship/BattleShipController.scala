@@ -22,11 +22,26 @@ case class BattlePos(x: Int, y: Int)
   */
 case class BattleField(width: Int, height: Int)
 
-sealed trait Vessel {
+/**
+  * A vessel is the common denominator of all ships which are to be defined.
+  */
+trait Vessel {
 
+  /**
+    * each vessel has a (nonempty) name.
+    *
+    * @return
+    */
   def name: String
 
+  /**
+    * position of the parts of a vessel, have to be connected and either
+    * all x or all y coordinates have to be the same.
+    *
+    * @return
+    */
   def positions: Set[BattlePos]
+
 }
 
 sealed trait Direction
@@ -35,25 +50,8 @@ case object Horizontal extends Direction
 
 case object Vertical extends Direction
 
-object BattleShip {
 
-  def apply(name: String, p: BattlePos, d: Direction): BattleShip = {
-    d match {
-      case Horizontal => BattleShip(name, (p.x until (p.x + 5)).map(x => BattlePos(x, p.y)).toSet)
-      case Vertical => BattleShip(name, (p.y until (p.y + 5)).map(y => BattlePos(p.x, y)).toSet)
-    }
-  }
 
-}
-
-case class BattleShip(name: String, positions: Set[BattlePos]) extends Vessel {
-
-  // every battleship has to have a name
-  require(name.nonEmpty, "Name has to be set.")
-
-  // require proofs that positions is of size 5
-  require(positions.size == 5, s"For mighty battleship '$name' required 5 positions, but got ${positions.size}.")
-}
 
 
 
@@ -81,7 +79,6 @@ case class Fleet(vessels: Set[Vessel]) {
 
   def findByName(name: String): Option[Vessel] = vessels.find(v => v.name == name)
 }
-
 
 
 case class BattleCell(pos: BattlePos

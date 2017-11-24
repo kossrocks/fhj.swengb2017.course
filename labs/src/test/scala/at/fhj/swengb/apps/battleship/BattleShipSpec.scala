@@ -2,6 +2,9 @@ package at.fhj.swengb.apps.battleship
 
 import org.scalatest.WordSpecLike
 
+/**
+  * Specifications for the Battleship class.
+  */
 class BattleShipSpec extends WordSpecLike {
 
   val bp = BattlePos(0, 0)
@@ -22,8 +25,7 @@ class BattleShipSpec extends WordSpecLike {
 
     "a correct battleship" in {
 
-      val battleShip = BattleShip("a name",
-        validPositions)
+      val battleShip = BattleShip("a name", validPositions)
 
       assert(battleShip != null)
     }
@@ -51,8 +53,16 @@ class BattleShipSpec extends WordSpecLike {
     "pos has to be vertical" in {
       assert(BattleShip("def", validyPos) != null)
     }
+
     // illegalPos defines a ship which is not possible
-    "pos is connected" in intercept[IllegalArgumentException](BattleShip("a b c", illegalPos))
+    "pos is connected" in {
+      intercept[IllegalArgumentException] {
+
+        illegalPos foreach println
+
+        val b = BattleShip("a b c", illegalPos)
+      }
+    }
 
   }
 }

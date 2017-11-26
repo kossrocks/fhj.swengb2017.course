@@ -9,6 +9,7 @@ class BattleShipSpec extends WordSpecLike {
 
   val bp = BattlePos(0, 0)
 
+
   val validPositions: Set[BattlePos] = Set(BattlePos(0, 0),
     BattlePos(0, 1),
     BattlePos(0, 2),
@@ -19,6 +20,7 @@ class BattleShipSpec extends WordSpecLike {
   val validxPos: Set[BattlePos] = (0 until 5).map(x => BattlePos(x, 0)).toSet
   val validyPos: Set[BattlePos] = (0 until 5).map(y => BattlePos(0, y)).toSet
   val illegalPos: Set[BattlePos] = Set(BattlePos(3, 1)) ++ validxPos.tail
+
 
   // TODO WP5.1 make all tests green
   "Battleship" should {

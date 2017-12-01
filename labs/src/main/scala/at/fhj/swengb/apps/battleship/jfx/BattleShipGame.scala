@@ -5,7 +5,6 @@ import javafx.scene.layout.GridPane
 import at.fhj.swengb.apps.battleship.{BattleField, BattlePos, Vessel}
 
 
-
 case class BattleShipGame(battleField: BattleField,
                           getCellWidth: Int => Double,
                           getCellHeight: Int => Double,
@@ -29,8 +28,38 @@ case class BattleShipGame(battleField: BattleField,
   // TODO make sure that when a vessel was destroyed, it is sunk and cannot be destroyed again. it is destroyed already.
   // TODO if all vessels are destroyed, display this to the user
   // TODO reset game state when a new game is started
-  def updateGameState(vessel: Vessel, pos: BattlePos): Unit = ()
+  def updateGameState(vessel: Vessel, pos: BattlePos): Unit = {
+    log("Hit Battleship " + vessel.name + " at position " + pos)
+    if (hits.contains(vessel)) {
 
+
+      if (hits(vessel).contains(pos)) {
+        log(s"vessel " + vessel.name + " was already hit before on position " + pos + ".")
+      }
+      else {
+
+        // wieviele Treffer hat ein Schiff schon bekommen
+        val n = hits(vessel).size + 1;
+        log(s"Vessel ${vessel.name} was hit $n times")
+      }
+      hits = hits.updated(vessel, hits(vessel) + pos)
+
+      if (hits(vessel) == vessel.occupiedPos) {
+        sunkShips = sunkShips + vessel
+        log(s"${vessel.name} is destroyed!")
+      }
+
+      if (battleField.fleet.vessels == sunkShips) {
+        log(s"GAME OVER")
+      }
+
+    }
+    else {
+      log("First hit on vessel " + vessel.name + ".")
+      hits = hits.updated(vessel, Set(pos))
+
+    }
+  }
 
   // 'display' cells
   def init(gridPane: GridPane): Unit = {

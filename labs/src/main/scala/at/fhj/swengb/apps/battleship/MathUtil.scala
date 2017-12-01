@@ -1,4 +1,4 @@
-package at.fhj.swengb
+package at.fhj.swengb.apps.battleship
 
 /**
   * Place to put mathematical intersting functions.
